@@ -100,6 +100,7 @@ def identify_token(token):
 # Test cases
 test_cases = [
     "while (fahr <= upper) a = 23.00; [* this is a sample *]",
+    # Add more test cases as needed
 ]
 
 # Run lexer on each test case
