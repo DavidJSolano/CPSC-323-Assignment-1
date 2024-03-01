@@ -1,5 +1,6 @@
 import re
 
+"""
 # Define token types
 TOKEN_KEYWORD = 'keyword'
 TOKEN_IDENTIFIER = 'identifier'
@@ -31,82 +32,86 @@ REAL_FSM = {'start': {'digit': 'in_real', '.': 'in_dot'},
 # Define operators and separators
 OPERATORS = {'+', '-', '*', '/', '<', '>', '=', '<=', '>='}  # Add more as needed
 SEPARATORS = {'(', ')', ';', '{', '}'}  # Add more as needed
+"""
 
-# Function to tokenize a given source code
-def lexer(source_code):
-    tokens = []
-    current_token = ''
-    fsm_state = 'start'
+class Lexer:
+    def __init__(self):
+        self.tokens = []
+        self.current_lexeme = ''
 
-    # Helper function to handle FSM transitions
-    def transition(current_state, char):
-        nonlocal fsm_state
-        if char.isalpha():
-            fsm_state = IDENTIFIER_FSM[current_state].get('alpha', 'end')
-        elif char.isdigit():
-            fsm_state = INTEGER_FSM[current_state].get('digit', 'end')
-        elif char == '.':
-            fsm_state = REAL_FSM[current_state].get('.', 'end')  # Directly go to end if not a digit
-        else:
-            fsm_state = 'end'
-        return fsm_state
+    def is_keyword(self, lexeme):
+      keywords = ['while', 'for', 'if', 'else']
+      return lexeme in keywords
 
-    # Iterate through the source code
-    for char in source_code:
-        if fsm_state == 'end':
-            # End current token
-            if current_token:
-                tokens.append((identify_token(current_token), current_token))
-                current_token = char  # Start new token with the next character
-            fsm_state = 'start'  # Reset state to 'start'
+    def is_separator(self, char):
+        return char in ['(', ')', ';']
 
-        # Handle comments (unchanged)
-        elif char == '[':
-            fsm_state = TOKEN_COMMENT
-            continue
-        elif char == ']':
-            fsm_state = 'start'
-            continue
-        elif fsm_state == TOKEN_COMMENT:
-            continue
+    def is_operator(self, char):
+        return char in ['<', '=', '>']
 
-        # Handle transitions
-        fsm_state = transition(fsm_state, char)
+    def add_token(self, token_type, lexeme):
+        self.tokens.append((token_type, lexeme))
+        self.current_lexeme = ''
 
-        # Add char to current token (unchanged)
-        if fsm_state != 'end':
-            current_token += char
+    def tokenize(self, code):
+        i = 0
+        while i < len(code):
+            char = code[i]
 
-    # Append the last token
-    if current_token:
-        tokens.append((identify_token(current_token), current_token))
+            # ignore whitespace
+            if char.isspace():
+                if self.current_lexeme:
+                    #  determine type of lexeme
+                    if self.is_keyword(self.current_lexeme):
+                        self.add_token('keyword', self.current_lexeme)
+                    elif self.current_lexeme.replace('.', '', 1).isdigit() and '.' in self.current_lexeme:
+                        self.add_token('real', self.current_lexeme)
+                    else:
+                        self.add_token('identifier', self.current_lexeme)
+                i += 1
+                continue
 
-    return tokens
+            # ignore comments
+            if char == '[':
+                i = code.find(']', i) + 1
+                if i == 0:  # No closing ']', syntax error
+                    raise ValueError("Unclosed comment")
+                continue
 
-def identify_token(token):
-    if token in KEYWORDS:
-        return TOKEN_KEYWORD
-    elif token.isdigit():
-        return TOKEN_INTEGER
-    elif re.match(r'\d+\.\d+', token):
-        return TOKEN_REAL
-    elif token in OPERATORS:
-        return TOKEN_OPERATOR
-    elif token in SEPARATORS:
-        return TOKEN_SEPARATOR
-    else:
-        return TOKEN_IDENTIFIER
+            # operators/separators
+            if self.is_operator(char) or self.is_separator(char):
+                if self.current_lexeme:
+                    # determine type of lexeme
+                    if self.is_keyword(self.current_lexeme):
+                        self.add_token('keyword', self.current_lexeme)
+                    elif self.current_lexeme.replace('.', '', 1).isdigit() and '.' in self.current_lexeme:
+                        self.add_token('real', self.current_lexeme)
+                    else:
+                        self.add_token('identifier', self.current_lexeme)
+                if self.is_operator(char) and code[i+1] == '=':  # For <= or >= operators
+                    self.add_token('operator', char + '=')
+                    i += 1
+                else:
+                    self.add_token('operator' if self.is_operator(char) else 'separator', char)
+            else:
+                self.current_lexeme += char
+            i += 1
 
-# Test cases
-test_cases = [
-    "while (fahr <= upper) a = 23.00; [* this is a sample *]",
-]
+        # if there is a final lexeme
+        if self.current_lexeme:
+            if self.is_keyword(self.current_lexeme):
+                self.add_token('keyword', self.current_lexeme)
+            elif self.current_lexeme.replace('.', '', 1).isdigit() and '.' in self.current_lexeme:
+                self.add_token('real', self.current_lexeme)
+            else:
+                self.add_token('identifier', self.current_lexeme)
 
-# Run lexer on each test case
-for idx, test_case in enumerate(test_cases, start=1):
-    tokens = lexer(test_case)
-    print(f"Test Case {idx}:")
-    print("Token\tLexeme")
-    for token, lexeme in tokens:
-        print(f"{token}\t{lexeme}")
-    print()
+        return self.tokens
+
+# example usage:
+lexer = Lexer()
+source_code = "while (fahr <= upper) a = 23.00; [* this is a sample *]"
+
+tokens = lexer.tokenize(source_code)
+for token in tokens:
+    print(f"{token[0]:<10} {token[1]}")
