@@ -37,85 +37,83 @@ class FSM:
         # list of tokens that have been found
         self.tokens: list = []
         # symbol table for state and transitions
-        self.table: dict = {x: dict() for x in self.states}
-        self.create_states()
+        self.table:dict = {
+            'invalid': {
+                'whitespace': 'valid',
+                'chr': 'invalid',
+                'int': 'invalid',
+                'dot': 'invalid',
+                'special': 'invalid',
+                'separator': 'valid',
+                'operator': 'invalid',
+                'comment': 'ignore',
+                'closecomment': 'invalid'
+            },
+            'identifier': {
+                'whitespace': 'valid',
+                'chr': 'identifier',
+                'int': 'identifier',
+                'dot': 'invalid',
+                'special': 'invalid',
+                'separator': 'valid',
+                'operator': 'operator',
+                'comment': 'ignore',
+                'closecomment': 'invalid'
+            },
+            'int': {
+                'whitespace': 'valid',
+                'chr': 'invalid',
+                'int': 'int',
+                'dot': 'real',
+                'special': 'invalid',
+                'separator': 'valid',
+                'operator': 'operator',
+                'comment': 'ignore',
+                'closecomment': 'invalid'
+            },
+            'real': {
+                'whitespace': 'valid',
+                'chr': 'invalid',
+                'int': 'real',
+                'dot': 'invalid',
+                'special': 'invalid',
+                'separator': 'valid',
+                'operator': 'operator',
+                'comment': 'ignore',
+                'closecomment': 'invalid'
+            },
+            'operator': {
+                'whitespace': 'ignore',
+                'chr': 'identifier',
+                'int': 'int',
+                'dot': 'invalid',
+                'special': 'invalid',
+                'separator': 'valid',
+                'operator': 'valid',
+                'comment': 'ignore',
+                'closecomment': 'invalid'
+            },
+            'valid': {
+                'whitespace': 'valid',
+                'chr': 'identifier',
+                'int': 'int',
+                'dot': 'invalid',
+                'special': 'invalid',
+                'separator': 'valid',
+                'operator': 'valid',
+                'comment': 'ignore',
+                'closecomment': 'invalid'
+            },
+            'ignore': {
+                # Define transitions for ignore state
+                # This line uses dict comprehension to specify all transitions
+                x: 'ignore' if x != 'closecomment' else 'valid' for x in self.symbols
+            }
+        }
         # grab tokens from our file
         self.lexer(file_path=filename)
         # create a deque to store the tokens
         self.token_dq: deque = deque(self.tokens)
-        self.tokens = []
-
-
-    def create_states(self):
-        #symbol table for fsm
-        
-        del self.table['keyword']
-
-        # transition states for 'invalid'
-        self.table['invalid']['whitespace'] = 'valid'
-        self.table['invalid']['chr'] = 'invalid'
-        self.table['invalid']['int'] = 'invalid'
-        self.table['invalid']['dot'] = 'invalid'
-        self.table['invalid']['special'] = 'invalid'
-        self.table['invalid']['separator'] = 'valid'
-        self.table['invalid']['operator'] = 'invalid'
-        self.table['invalid']['comment'] = 'ignore'
-        self.table['invalid']['closecomment'] = 'invalid'
-        # transition states is 'identifier'
-        self.table['identifier']['whitespace'] = 'valid'
-        self.table['identifier']['chr'] = 'identifier'
-        self.table['identifier']['int'] = 'identifier'
-        self.table['identifier']['dot'] = 'invalid'
-        self.table['identifier']['special'] = 'invalid'
-        self.table['identifier']['separator'] = 'valid'
-        self.table['identifier']['operator'] = 'operator'
-        self.table['identifier']['comment'] = 'ignore'
-        self.table['identifier']['closecomment'] = 'invalid'
-        # transition states for 'int'
-        self.table['int']['whitespace'] = 'valid'
-        self.table['int']['chr'] = 'invalid'
-        self.table['int']['int'] = 'int'
-        self.table['int']['dot'] = 'real'
-        self.table['int']['special'] = 'invalid'
-        self.table['int']['separator'] = 'valid'
-        self.table['int']['operator'] = 'operator'
-        self.table['int']['comment'] = 'ignore'
-        self.table['int']['closecomment'] = 'invalid'
-        # transition states for  'real'
-        self.table['real']['whitespace'] = 'valid'
-        self.table['real']['chr'] = 'invalid'
-        self.table['real']['int'] = 'real'
-        self.table['real']['dot'] = 'invalid'
-        self.table['real']['special'] = 'invalid'
-        self.table['real']['separator'] = 'valid'
-        self.table['real']['operator'] = 'operator'
-        self.table['real']['comment'] = 'ignore'
-        self.table['real']['closecomment'] = 'invalid'
-        # transition states for 'operator'
-        self.table['operator']['whitespace'] = 'ignore'
-        self.table['operator']['chr'] = 'identifier'
-        self.table['operator']['int'] = 'int'
-        self.table['operator']['dot'] = 'invalid'
-        self.table['operator']['special'] = 'invalid'
-        self.table['operator']['separator'] = 'valid'
-        self.table['operator']['operator'] = 'valid'
-        self.table['operator']['comment'] = 'ignore'
-        self.table['operator']['closecomment'] = 'invalid'
-        # transition states for 'valid'
-        self.table['valid']['whitespace'] = 'valid'
-        self.table['valid']['chr'] = 'identifier'
-        self.table['valid']['int'] = 'int'
-        self.table['valid']['dot'] = 'invalid'
-        self.table['valid']['special'] = 'invalid'
-        self.table['valid']['separator'] = 'valid'
-        
-        self.table['valid']['operator'] = 'valid'
-        self.table['valid']['comment'] = 'ignore'
-        self.table['valid']['closecomment'] = 'invalid'
-        # New states depending on if our state is 'ignore'
-        # Every state besides a new comment will be ignored here, so we can do this in 1 line using dict comprehension and a ternary statement
-        self.table['ignore'] = {x: 'ignore' if x !=
-                                'closecomment' else 'valid' for x in self.symbols}
 
     def lexer(self, file_path: str):
         # open and read the file
@@ -236,10 +234,12 @@ class FSM:
             raise EOFError(f"Tokens are now empty in {self.filename}")
         
 """This is for displaying output in terminal """
-testcase = FSM("test3.txt")
+testcase = FSM("test1.txt")
 try:
+    print(f"{'Token':<15}Lexeme")
     while True:
-        print(testcase.token())
+        a = testcase.token()
+        print(f"{a['token']: <15}{a['lexeme']}")
 except Exception as e:
     print(e)   
 
