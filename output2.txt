@@ -1,0 +1,54 @@
+Token          Lexeme
+keyword        while
+separator      (
+identifier     fahr
+operator       <=
+identifier     upper
+separator      )
+identifier     a
+operator       =
+real           23.00
+separator      ;
+Tokens are now empty in test1.txt
+
+clatt at kevinzhuang in CPSC-323-Assignment-1 on  main [$✘!?] via  v3.10.6 
+❯ python3 lexer.py
+Token          Lexeme
+keyword        function
+identifier     factorial
+separator      (
+identifier     number
+keyword        integer
+separator      )
+separator      {
+keyword        if
+separator      (
+identifier     number
+operator       ==
+valid          1
+separator      )
+separator      {
+keyword        return
+identifier     number
+separator      ;
+separator      }
+keyword        else
+separator      {
+identifier     number
+operator       =
+identifier     number
+operator       -
+valid          1
+separator      ;
+keyword        return
+identifier     number
+operator       *
+identifier     factorial
+separator      (
+identifier     number
+separator      )
+separator      ;
+separator      }
+keyword        endif
+separator      }
+Tokens are now empty in test2.txt

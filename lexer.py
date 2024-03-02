@@ -233,8 +233,8 @@ class FSM:
         except Exception:
             raise EOFError(f"Tokens are now empty in {self.filename}")
         
-"""This is for displaying output in terminal """
-testcase = FSM("test1.txt")
+""" This is for displaying output in terminal """
+testcase = FSM("test3.txt")
 try:
     print(f"{'Token':<15}Lexeme")
     while True:
@@ -244,12 +244,12 @@ except Exception as e:
     print(e)   
 
 
-"""
 
+"""
 #This is for generating output files and no display output in terminal
 #test case
 test = FSM("test1.txt")
-with open('display1', 'w') as f:
+with open('output1', 'w') as f:
     try:
         while True:
             print(test.token(), file=f)
@@ -257,7 +257,7 @@ with open('display1', 'w') as f:
         print(e,file=f)
 
 test1 = FSM("test2.txt")
-with open('display2', 'w') as f:
+with open('output2', 'w') as f:
     try:
         while True:
             print(test1.token(), file=f)
@@ -265,7 +265,7 @@ with open('display2', 'w') as f:
         print(e,file=f)
 
 test2 = FSM("test3.txt")
-with open('display3.txt', 'w') as f:
+with open('output3.txt', 'w') as f:
     try:
         while True:
             print(test2.token(), file=f)
