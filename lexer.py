@@ -44,7 +44,7 @@ class Lexer:
       return lexeme in keywords
 
     def is_separator(self, char):
-        return char in ['(', ')', ';']
+        return char in [',', '(', ')', ';']
 
     def is_operator(self, char):
         return char in ['<', '=', '>']
@@ -110,7 +110,29 @@ class Lexer:
 
 # example usage:
 lexer = Lexer()
-source_code = "while (fahr <= upper) a = 23.00; [* this is a sample *]"
+source_code = """
+[*
+This is some sample code written in Rat23F
+This will generate tokens using the code in this file
+When `main` is run, the tokens will be written to 
+testfile1_ratout.txt if you select this file for analysis
+
+All comments will be ignored and not stored
+*]
+
+function factorial(number integer)
+{
+    if (number == 1)
+    {
+        ret number;
+    }
+    else
+    {
+        number = number - 1;
+        ret number * factorial(number);
+    }
+    endif
+}"""
 
 tokens = lexer.tokenize(source_code)
 for token in tokens:
