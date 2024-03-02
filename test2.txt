@@ -1,8 +1,8 @@
 [*
-This is some sample code written in Rat23F
+This is some sample code written in Rat24S
 This will generate tokens using the code in this file
 When `main` is run, the tokens will be written to 
-testfile1_ratout.txt if you select this file for analysis
+testfile1.txt if you select this file for analysis
 
 All comments will be ignored and not stored
 *]
@@ -11,12 +11,12 @@ function factorial(number integer)
 {
     if (number == 1)
     {
-        ret number;
+        return number;
     }
     else
     {
         number = number - 1;
-        ret number * factorial(number);
+        return number * factorial(number);
     }
     endif
 }

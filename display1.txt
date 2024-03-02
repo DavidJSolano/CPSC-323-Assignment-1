@@ -1,0 +1,11 @@
+{'token': 'keyword', 'lexeme': 'while'}
+{'token': 'separator', 'lexeme': '('}
+{'token': 'identifier', 'lexeme': 'fahr'}
+{'token': 'operator', 'lexeme': '<='}
+{'token': 'identifier', 'lexeme': 'upper'}
+{'token': 'separator', 'lexeme': ')'}
+{'token': 'identifier', 'lexeme': 'a'}
+{'token': 'operator', 'lexeme': '='}
+{'token': 'real', 'lexeme': '23.00'}
+{'token': 'separator', 'lexeme': ';'}
+Tokens are now empty in test1.txt
