@@ -4,8 +4,8 @@ from collections import deque
 from typing import Dict
 
 
-# dictionary to store tokens and lexemes
-token = {'token': 'value', 'lexeme': 'lexemee'}
+# dictionary to store tokens and lexeme
+token = {'token': 'value', 'lexeme': 'lexeme'}
 
 #  separators in RAT24S
 separators: set = set(['$', '(', ')', ',', '{', '}', ';'])
