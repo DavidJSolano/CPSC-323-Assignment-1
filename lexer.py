@@ -12,7 +12,7 @@ separators: set = set(['$', '(', ')', ',', '{', '}', ';'])
 
 # separators in RAT24S
 keywords: set = set(['function', 'integer', 'bool', 'real',
-                    'if', 'else', 'endif', 'return', 'scan', 'print', 'while'])
+                    'if', 'else', 'endif', 'return', 'scan', 'print', 'while', 'boolean' , 'endwhile', 'true', 'false'])
 
 # operators in RAT24S
 operators: set = set(
@@ -47,7 +47,8 @@ class FSM:
                 'separator': 'valid',
                 'operator': 'invalid',
                 'comment': 'ignore',
-                'closecomment': 'invalid'
+                'closecomment': 'invalid',
+                'underscore': 'invalid'
             },
             'identifier': {
                 'whitespace': 'valid',
@@ -58,7 +59,8 @@ class FSM:
                 'separator': 'valid',
                 'operator': 'operator',
                 'comment': 'ignore',
-                'closecomment': 'invalid'
+                'closecomment': 'invalid',
+                'underscore': 'valid'
             },
             'int': {
                 'whitespace': 'valid',
@@ -69,7 +71,8 @@ class FSM:
                 'separator': 'valid',
                 'operator': 'operator',
                 'comment': 'ignore',
-                'closecomment': 'invalid'
+                'closecomment': 'invalid',
+                'underscore': 'invalid'
             },
             'real': {
                 'whitespace': 'valid',
@@ -80,7 +83,8 @@ class FSM:
                 'separator': 'valid',
                 'operator': 'operator',
                 'comment': 'ignore',
-                'closecomment': 'invalid'
+                'closecomment': 'invalid',
+                'underscore': 'invalid'
             },
             'operator': {
                 'whitespace': 'ignore',
@@ -91,7 +95,8 @@ class FSM:
                 'separator': 'valid',
                 'operator': 'valid',
                 'comment': 'ignore',
-                'closecomment': 'invalid'
+                'closecomment': 'invalid',
+                'underscore': 'invalid'
             },
             'valid': {
                 'whitespace': 'valid',
@@ -102,7 +107,8 @@ class FSM:
                 'separator': 'valid',
                 'operator': 'valid',
                 'comment': 'ignore',
-                'closecomment': 'invalid'
+                'closecomment': 'invalid',
+                'underscore': 'invalid'
             },
             'ignore': {
                 # Define transitions for ignore state
@@ -154,7 +160,8 @@ class FSM:
             
             elif file_contents[ind] in letters:
                 return 'chr'
-            
+            elif file_contents[ind] == '_':
+                return 'underscore'
             elif file_contents[ind] in nums:
                 return 'int'
             
@@ -200,6 +207,13 @@ class FSM:
                 if next_symbol != 'operator' or curr_token + file_contents[i+1] not in operators:
                     if curr_token == '!': curr_state = 'invalid'
                     self.tokens.append({'token':curr_symbol,'lexeme': curr_token})
+                    curr_token = ''
+                    curr_state = 'valid'
+                continue
+            if curr_symbol == 'dot':
+                if next_symbol != 'int':
+                    curr_state = 'invalid'
+                    self.tokens.append({'token':'invalid','lexeme': curr_token})
                     curr_token = ''
                     curr_state = 'valid'
                 continue
