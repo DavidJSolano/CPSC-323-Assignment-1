@@ -233,7 +233,6 @@ class FSM:
                     old_state = 'separator'
                 elif curr_token in keywords:
                     old_state = 'keyword'
-
                 self.tokens.append({'token':old_state,'lexeme': curr_token})
                 curr_token = ''
 
@@ -248,14 +247,14 @@ class FSM:
             raise EOFError(f"Tokens are now empty in {self.filename}")
         
 """ This is for displaying output in terminal """
-testcase = FSM("test3.txt")
-try:
-    print(f"{'Token':<15}Lexeme")
-    while True:
-        a = testcase.token()
-        print(f"{a['token']: <15}{a['lexeme']}")
-except Exception as e:
-    print(e)   
+# testcase = FSM("test3.txt")
+# try:
+#     print(f"{'Token':<15}Lexeme")
+#     while True:
+#         a = testcase.token()
+#         print(f"{a['token']: <15}{a['lexeme']}")
+# except Exception as e:
+#     print(e)   
 
 
 
