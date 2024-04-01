@@ -1,2 +1,3 @@
-# CPSC-351-Assignment-1
-This repository is for our first Assignment for CPSC 351
+# CPSC-323 Semester Project
+This repository is for our Compiler project for CPSC323
+
