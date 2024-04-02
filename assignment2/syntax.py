@@ -15,6 +15,7 @@ class Syntax():
         self.switch = True
 
     def print_token(self, val):
+        print("----------------------------------------------")
         print(f"Token: {val['token']: <15} Lexeme: {val['lexeme']}")
     
     def print_exception(self):
@@ -482,7 +483,4 @@ class Syntax():
         return
     
 testcase = Syntax(FSM("test3.txt"))
-
-for t in testcase.token_list:
-    testcase.print_token(t)
 testcase.Rat24S(testcase.token_list[0])
