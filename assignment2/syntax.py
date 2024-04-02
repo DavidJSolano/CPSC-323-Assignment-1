@@ -7,8 +7,8 @@ class Syntax():
         self.token_list = []
         self.token_list.extend(fsm.tokens)
         for token in self.token_list:
-            if token['token'] == 'valid':
-                token['token'] = 'int'
+            if token['token'] == 'valid' or token['token'] == 'int':
+                token['token'] = 'integer'
         self.token_list.insert(0, {'token': 'blank', 'lexeme': 'blank'})
         self.curr_index = 0
         self.curr_token = self.token_list[self.curr_index]
@@ -52,20 +52,22 @@ class Syntax():
     def Rat24S(self, next):
         if self.switch:
             print(
-                "<Rat24S> -> <Opt Function Definitions> # <Opt Declaration List> <Statement List> #")
+                "<Rat24S> -> $ <Opt Function Definitions> $ <Opt Declaration List> $ <Statement List> $")
         if self.get_next(val='function')['lexeme'] != 'none':
             self.opt_function_def(self.set_next('function'))
         elif self.get_next()['lexeme'] == 'function':
             self.opt_function_def(self.set_next())
 
-        self.set_next()  # '#'
+        self.set_next()  # '$'
+
 
         if self.get_next()['lexeme'] in qualifiers:
             self.opt_declaration_list(self.set_next())
+            self.set_next()  # '$'
             self.statement_list(self.set_next())
-        elif self.get_next()['lexeme'] != '#':
+        elif self.get_next()['lexeme'] != '$':
             self.statement_list(self.set_next())
-        self.set_next()  # '#'
+        self.set_next()  # '$'
 
     def opt_function_def(self, next):
         if next['lexeme'] == 'function':
@@ -203,7 +205,7 @@ class Syntax():
 
     def statement_list(self, next):
         if next['lexeme'] == 'if':
-            if (self.get_next(val='endif', amt=1)['lexeme'] == '}' and self.get_next(val=';', amt=1)['lexeme'] == '}') or self.get_next(val='endif', amt=1)['lexeme'] == '#':
+            if (self.get_next(val='endif', amt=1)['lexeme'] == '}' and self.get_next(val=';', amt=1)['lexeme'] == '}') or self.get_next(val='endif', amt=1)['lexeme'] == '$':
                 if self.switch:
                     print("<Statement List> -> <Statement>")
                 self.statement(next)
@@ -213,7 +215,7 @@ class Syntax():
                 self.statement(next)
                 self.statement_list(self.set_next())
         elif next['lexeme'] == 'while':
-            if self.get_next(val='}', amt=1)['token'] == 'separator' or self.get_next(val=';', amt=1)['lexeme'] == '#':
+            if self.get_next(val='endwhile', amt=1)['lexeme'] == '}' and self.get_next(val=';', amt=1)['lexeme'] == '}' or self.get_next(val='endwhile', amt=1)['lexeme'] == '$':
                 if self.switch:
                     print("<Statement List> -> <Statement>")
                 self.statement(next)
@@ -222,7 +224,7 @@ class Syntax():
                     print("<Statement List> -> <Statement> <Statement List>")
                 self.statement(next)
                 self.statement_list(self.set_next())
-        elif self.get_next(val=';', amt=1)['lexeme'] == '}' or self.get_next(val=';', amt=1)['lexeme'] == '#':
+        elif self.get_next(val=';', amt=1)['lexeme'] == '}' or self.get_next(val=';', amt=1)['lexeme'] == '$':
             if self.switch:
                 print("<Statement List> -> <Statement>")
             self.statement(next)
@@ -249,11 +251,11 @@ class Syntax():
             if self.switch:
                 print("<Statement> -> <Return>")
             self.Return(next)
-        elif next['lexeme'] == 'put':
+        elif next['lexeme'] == 'print':
             if self.switch:
                 print("<Statement> -> <Print>")
             self.Print(next)
-        elif next['lexeme'] == 'get':
+        elif next['lexeme'] == 'scan':
             if self.switch:
                 print("<Statement> -> <Scan>")
             self.scan(next)
@@ -327,7 +329,7 @@ class Syntax():
 
     def Print(self, next):
         if self.switch:
-            print("<Print> -> put ( <Expression> );")
+            print("<Print> -> print ( <Expression> );")
         self.set_next()  # '('
         self.expression(self.set_next())
         self.set_next()  # ')'
@@ -335,19 +337,36 @@ class Syntax():
 
     def scan(self, next):
         if self.switch:
-            print("<Scan> -> get ( <IDs> );")
+            print("<Scan> -> scan ( <IDs> );")
         self.set_next()  # '('
         self.IDs(self.set_next())
         self.set_next()  # ')'
         self.set_next()  # ';'
 
     def While(self, next):
+        temp_list = []
+        found = False
+        for token in self.token_list[self.curr_index:]:
+            temp_list.append(token['lexeme'])
+        try:
+            else_token = temp_list.index('endwhile')
+        except:
+            else_token = -999
+        if else_token >= 0:
+            found = True
         if self.switch:
-            print("<While> -> while ( <Condition> ) <Statement>")
+            print("<While> -> while ( <Condition> ) <Statement> endwhile")
         self.set_next()  # '('
         self.condition(self.set_next())
         self.set_next()  # ')'
         self.statement(self.set_next())
+        if found:
+            self.set_next()  # 'endwhile'
+        else:
+            print(self.curr_token)
+            raise TypeError(f"Need an 'endwhile' statement.")
+
+
 
     def condition(self, next):
         if self.switch:
@@ -433,7 +452,7 @@ class Syntax():
             if self.switch:
                 print("<Primary> -> <Real>")
             self.real(next)
-        elif next['token'] == 'int':
+        elif next['token'] == 'integer':
             if self.switch:
                 print("<Primary> -> <Integer>")
             self.integer(next)
@@ -462,7 +481,7 @@ class Syntax():
     def empty(self):
         return
     
-testcase = Syntax(FSM("test1.txt"))
+testcase = Syntax(FSM("test3.txt"))
 
 for t in testcase.token_list:
     testcase.print_token(t)
