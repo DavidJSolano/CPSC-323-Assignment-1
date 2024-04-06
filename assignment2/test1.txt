@@ -1,6 +1,24 @@
+
 [*
-This file is a mix of the sample provided to us in the instructions of the assignment
-and small code snippets for testing tokens
+example of area of rectangle
 *]
 
-while (fahr <= upper) a = 23.00; [* this is a sample *]
+$
+
+function areaRectangle (integer length, integer width)
+{
+    boolean valid;
+
+    if (length * width < 0)
+    {
+        valid = False;
+        print(valid)
+    }
+
+    else{
+        return length *width
+    }
+    endif
+}
+
+$

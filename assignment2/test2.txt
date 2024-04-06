@@ -1,27 +1,21 @@
-[* this is comment for this sample code which
-converts Fahrenheit into Celcius *]
-$
-function convertx (fahr integer)
-{
-return 5 * (fahr - 32) / 9;
-}
-function test (first integer)
-{
-return 8 + 3 + 4 + integer;
-}
-$
-integer low, high, step; [* declarations *]
-$
-scan (low, high, step);
+[* example 2 *]
 
-if (ans == -3)
-    return 0;
-endif
-
-while (low <= high )
-{ print (low);
-print (convertx (low));
-low = low + step;
+$
+function average (any integer)
+{
+    a = integer;
+    b = 4;
+    c = 9;
+    return (a + b + c) / 3;
 }
-endwhile
+
+function maximum (first integer)
+{
+    max = 30;
+    if (max < integer)
+    {
+        max = integer;
+    }
+    return max;
+}
 $
