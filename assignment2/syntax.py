@@ -160,6 +160,10 @@ class Syntax():
     def qualifier(self, next):
         if self.switch:
             print(f"<Qualifier> -> {next['lexeme']}")
+        else:
+            raise TypeError(f"Expected a qualifier token, but got: {next['lexeme']} at index {self.curr_index}")
+
+
 
     def opt_declaration_list(self, next):
         if next['lexeme'] in qualifiers:
@@ -273,15 +277,20 @@ class Syntax():
             print("<Compound> -> { <Statement List> }")
         if self.get_next()['lexeme'] != '}':
             self.statement_list(self.set_next())
-        self.set_next()  # '}'
+            self.set_next()  # '}'
+        else:
+            raise SyntaxError(f"Expected '}}' at the end of compound statement, but got: {self.get_next()['lexeme']} at index {self.curr_index}")
+
 
     def assign(self, next):
         if self.switch:
             print("<Assign> -> <Identifier> = <Expression>;")
-        self.identifier(next)
-        self.set_next()  # '='
-        self.expression(self.set_next())
-        self.set_next()  # ';'
+            self.identifier(next)
+            self.set_next()  # '='
+            self.expression(self.set_next())
+            self.set_next()  # ';'
+        else:
+            raise SyntaxError(f"Expected ';' after assignment, but got: {self.get_next()['lexeme']} at index {self.curr_index}")
 
     def If(self, next):
         temp_list = []
@@ -339,10 +348,13 @@ class Syntax():
     def scan(self, next):
         if self.switch:
             print("<Scan> -> scan ( <IDs> );")
-        self.set_next()  # '('
-        self.IDs(self.set_next())
-        self.set_next()  # ')'
-        self.set_next()  # ';'
+            self.set_next()  # '('
+            self.IDs(self.set_next())
+            self.set_next()  # ')'
+            self.set_next()  # ';'
+        else:
+            raise SyntaxError(f"Expected ';' after scan statement, but got: {self.get_next()['lexeme']} at index {self.curr_index}")
+
 
     def While(self, next):
         temp_list = []
@@ -372,13 +384,17 @@ class Syntax():
     def condition(self, next):
         if self.switch:
             print("<Condition> -> <Expression> <Relop> <Expression>")
-        self.expression(next)
-        self.relop(self.set_next())
-        self.expression(self.set_next())
+            self.expression(next)
+            self.relop(self.set_next())
+            self.expression(self.set_next())
+        else:
+            raise TypeError(f"Expected an expression token, but got: {self.get_next()['lexeme']} at index {self.curr_index}")
 
     def relop(self, next):
         if self.switch:
             print(f"<Relop> -> {next['lexeme']}")
+        else:
+            raise TypeError(f"Expected a relational operator, but got: {next['lexeme']} at index {self.curr_index}")
 
     def expression(self, next):
         if self.switch:
@@ -406,8 +422,10 @@ class Syntax():
     def term(self, next):
         if self.switch:
             print("<Term> -> <Factor> <Term Prime>")
-        self.factor(next)
-        self.term2(self.set_next())
+            self.factor(next)
+            self.term2(self.set_next())
+        else:
+            raise TypeError(f"Expected a factor token, but got: {next['lexeme']} at index {self.curr_index}")
 
     def term2(self, next):
         if next['lexeme'] == '*':
@@ -474,11 +492,14 @@ class Syntax():
     def integer(self, next):
         if self.switch:
             print(f"<Integer> -> {next['lexeme']}")
+        else:
+            raise TypeError(f"Expected an integer token, but got: {next['lexeme']} at index {self.curr_index}")
 
     def real(self, next):
         if self.switch:
             print(f"<Real> -> {next['lexeme']}")
-
+        else:
+            raise TypeError(f"Expected a real number token, but got: {next['lexeme']} at index {self.curr_index}")
     def empty(self):
         return
     
