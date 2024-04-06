@@ -1,21 +1,17 @@
 [* example 2 *]
 
 $
-function average (any integer)
+function average (integer a, integer b , integer c)
 {
-    a = integer;
-    b = 4;
-    c = 9;
+
     return (a + b + c) / 3;
 }
 
-function maximum (first integer)
-{
-    max = 30;
-    if (max < integer)
-    {
-        max = integer;
-    }
-    return max;
-}
 $
+[*declarations*]
+integer num1 , num2, num3;
+$
+
+scan(num1,num2,num3);
+
+print(average(num1,num2,num3));

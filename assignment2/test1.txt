@@ -1,24 +1,29 @@
 
-[*
-example of area of rectangle
-*]
+[* example of area of rectangle *]
 
 $
 
 function areaRectangle (integer length, integer width)
 {
-    boolean valid;
+   return length *width;
 
-    if (length * width < 0)
+}
+
+    $
+    [* declarations *]
+    integer l , w;
+    boolean valid;
+    $
+    
+    scan(l,w);
+    if (l * w < 0)
     {
         valid = False;
-        print(valid)
+        print(valid);
     }
 
     else{
-        return length *width
+        print(areaRectangle(l,w));
     }
     endif
-}
-
 $
