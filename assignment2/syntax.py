@@ -511,3 +511,8 @@ while True:
         case 'Q':
             print("Goodbye!")
             break
+        case 'q':
+            print("Goodbye!")
+            break
+        case _:
+            print("Invalid input. Please enter 1, 2, 3, or 'Q'")
