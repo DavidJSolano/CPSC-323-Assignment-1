@@ -1,6 +1,6 @@
 from lexer import *
 
-qualifiers: set = set(['integer', 'bool', 'real'])
+qualifiers: set = set(['integer', 'boolean', 'real'])
 
 class Syntax():
     def __init__(self, fsm):
@@ -19,7 +19,7 @@ class Syntax():
         print(f"Token: {val['token']: <15} Lexeme: {val['lexeme']}")
     
     def print_exception(self):
-        return f"{self.token_list[self.curr_index + 1]['lexeme']} at index {self.curr_index}"
+        return f"{self.token_list[self.curr_index]['lexeme']} at index {self.curr_index}"
 
     def set_next(self, val='', amt=0):
         if self.switch == True:
@@ -51,6 +51,9 @@ class Syntax():
         return self.token_list[start + amt + 1]
 
     def Rat24S(self, next):
+        self.set_next() # $
+        if self.curr_token['lexeme'] != '$':
+            raise TypeError(f"This token must be a $. The token is: " + self.print_exception())
         if self.switch:
             print(
                 "<Rat24S> -> $ <Opt Function Definitions> $ <Opt Declaration List> $ <Statement List> $")
@@ -60,15 +63,21 @@ class Syntax():
             self.opt_function_def(self.set_next())
 
         self.set_next()  # '$'
+        if self.curr_token['lexeme'] != '$':
+            raise TypeError(f"This token must be a $. The token is: " + self.print_exception())
 
 
         if self.get_next()['lexeme'] in qualifiers:
             self.opt_declaration_list(self.set_next())
             self.set_next()  # '$'
+            if self.curr_token['lexeme'] != '$':
+                raise TypeError(f"This token must be a $. The token is: " + self.print_exception())
             self.statement_list(self.set_next())
         elif self.get_next()['lexeme'] != '$':
             self.statement_list(self.set_next())
         self.set_next()  # '$'
+        if self.curr_token['lexeme'] != '$':
+            raise TypeError(f"This token must be a $. The token is: " + self.print_exception())
 
     def opt_function_def(self, next):
         if next['lexeme'] == 'function':
@@ -160,10 +169,6 @@ class Syntax():
     def qualifier(self, next):
         if self.switch:
             print(f"<Qualifier> -> {next['lexeme']}")
-        else:
-            raise TypeError(f"Expected a qualifier token, but got: {next['lexeme']} at index {self.curr_index}")
-
-
 
     def opt_declaration_list(self, next):
         if next['lexeme'] in qualifiers:
@@ -277,20 +282,15 @@ class Syntax():
             print("<Compound> -> { <Statement List> }")
         if self.get_next()['lexeme'] != '}':
             self.statement_list(self.set_next())
-            self.set_next()  # '}'
-        else:
-            raise SyntaxError(f"Expected '}}' at the end of compound statement, but got: {self.get_next()['lexeme']} at index {self.curr_index}")
-
+        self.set_next()  # '}'
 
     def assign(self, next):
         if self.switch:
             print("<Assign> -> <Identifier> = <Expression>;")
-            self.identifier(next)
-            self.set_next()  # '='
-            self.expression(self.set_next())
-            self.set_next()  # ';'
-        else:
-            raise SyntaxError(f"Expected ';' after assignment, but got: {self.get_next()['lexeme']} at index {self.curr_index}")
+        self.identifier(next)
+        self.set_next()  # '='
+        self.expression(self.set_next())
+        self.set_next()  # ';'
 
     def If(self, next):
         temp_list = []
@@ -348,13 +348,10 @@ class Syntax():
     def scan(self, next):
         if self.switch:
             print("<Scan> -> scan ( <IDs> );")
-            self.set_next()  # '('
-            self.IDs(self.set_next())
-            self.set_next()  # ')'
-            self.set_next()  # ';'
-        else:
-            raise SyntaxError(f"Expected ';' after scan statement, but got: {self.get_next()['lexeme']} at index {self.curr_index}")
-
+        self.set_next()  # '('
+        self.IDs(self.set_next())
+        self.set_next()  # ')'
+        self.set_next()  # ';'
 
     def While(self, next):
         temp_list = []
@@ -384,17 +381,13 @@ class Syntax():
     def condition(self, next):
         if self.switch:
             print("<Condition> -> <Expression> <Relop> <Expression>")
-            self.expression(next)
-            self.relop(self.set_next())
-            self.expression(self.set_next())
-        else:
-            raise TypeError(f"Expected an expression token, but got: {self.get_next()['lexeme']} at index {self.curr_index}")
+        self.expression(next)
+        self.relop(self.set_next())
+        self.expression(self.set_next())
 
     def relop(self, next):
         if self.switch:
             print(f"<Relop> -> {next['lexeme']}")
-        else:
-            raise TypeError(f"Expected a relational operator, but got: {next['lexeme']} at index {self.curr_index}")
 
     def expression(self, next):
         if self.switch:
@@ -422,10 +415,8 @@ class Syntax():
     def term(self, next):
         if self.switch:
             print("<Term> -> <Factor> <Term Prime>")
-            self.factor(next)
-            self.term2(self.set_next())
-        else:
-            raise TypeError(f"Expected a factor token, but got: {next['lexeme']} at index {self.curr_index}")
+        self.factor(next)
+        self.term2(self.set_next())
 
     def term2(self, next):
         if next['lexeme'] == '*':
@@ -492,16 +483,31 @@ class Syntax():
     def integer(self, next):
         if self.switch:
             print(f"<Integer> -> {next['lexeme']}")
-        else:
-            raise TypeError(f"Expected an integer token, but got: {next['lexeme']} at index {self.curr_index}")
 
     def real(self, next):
         if self.switch:
             print(f"<Real> -> {next['lexeme']}")
-        else:
-            raise TypeError(f"Expected a real number token, but got: {next['lexeme']} at index {self.curr_index}")
+
     def empty(self):
         return
-    
-testcase = Syntax(FSM("test3.txt"))
-testcase.Rat24S(testcase.token_list[0])
+
+while True:
+    print("Please enter an integer value for the test case you would like to run (1, 2, or 3) or 'Q' to exit")
+    print("1. test1.txt")
+    print("2. test2.txt")
+    print("3. test3.txt")
+    print("Q. Quit")
+    number = input()
+    match number:
+        case '1':
+            testcase = Syntax(FSM("test1.txt"))
+            testcase.Rat24S(testcase.token_list[0])
+        case '2':
+            testcase = Syntax(FSM("test2.txt"))
+            testcase.Rat24S(testcase.token_list[0])
+        case '3':
+            testcase = Syntax(FSM("test3.txt"))
+            testcase.Rat24S(testcase.token_list[0])
+        case 'Q':
+            print("Goodbye!")
+            break

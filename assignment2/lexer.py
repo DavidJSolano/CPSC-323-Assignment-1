@@ -11,7 +11,7 @@ token = {'token': 'value', 'lexeme': 'lexeme'}
 separators: set = set(['$', '(', ')', ',', '{', '}', ';'])
 
 # separators in RAT24S
-keywords: set = set(['function', 'integer', 'bool', 'real',
+keywords: set = set(['function', 'integer', 'real',
                     'if', 'else', 'endif', 'return', 'scan', 'print', 'while', 'boolean' , 'endwhile', 'true', 'false'])
 
 # operators in RAT24S

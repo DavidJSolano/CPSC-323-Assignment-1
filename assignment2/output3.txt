@@ -1,69 +1,117 @@
-Token          Lexeme
-separator      $
-keyword        function
-identifier     convertx
-separator      (
-identifier     fahr
-keyword        integer
-separator      )
-separator      {
-keyword        return
-int            5
-operator       *
-separator      (
-identifier     fahr
-operator       -
-int            32
-separator      )
-operator       /
-valid          9
-separator      ;
-separator      }
-separator      $
-keyword        integer
-identifier     low
-separator      ,
-identifier     high
-separator      ,
-identifier     step
-separator      ;
-separator      $
-keyword        scan
-separator      (
-identifier     low
-separator      ,
-identifier     high
-separator      ,
-identifier     step
-separator      )
-separator      ;
-keyword        while
-separator      (
-identifier     low
-operator       <=
-identifier     high
-separator      )
-separator      {
-keyword        print
-separator      (
-identifier     low
-separator      )
-separator      ;
-keyword        print
-separator      (
-identifier     convertx
-separator      (
-identifier     low
-separator      )
-separator      )
-separator      ;
-identifier     low
-operator       =
-identifier     low
-operator       +
-identifier     step
-separator      ;
-separator      }
-identifier     endwhile
-separator      $
-Tokens are now empty in test3.txt
+Please enter an integer value for the test case you would like to run (1, 2, or 3) or 'Q' to exit
+1. test1.txt
+2. test2.txt
+3. test3.txt
+----------------------------------------------
+Token: separator       Lexeme: $
+<Rat24S> -> $ <Opt Function Definitions> $ <Opt Declaration List> $ <Statement List> $
+----------------------------------------------
+Token: separator       Lexeme: $
+----------------------------------------------
+Token: keyword         Lexeme: boolean
+<Opt Declaration List> -> <Declaration List>
+<Declaration List> -> <Declaration>;
+<Declaration> -> <Qualifier> <IDs>
+<Qualifier> -> boolean
+----------------------------------------------
+Token: identifier      Lexeme: valid
+<IDs> -> <Identifier>
+<Identifier> -> valid
+----------------------------------------------
+Token: separator       Lexeme: ;
+----------------------------------------------
+Token: separator       Lexeme: $
+----------------------------------------------
+Token: keyword         Lexeme: if
+<Statement List> -> <Statement>
+<Statement> -> <If>
+<If> -> if ( <Condition> ) <Statement> else <Statement> endif
+----------------------------------------------
+Token: separator       Lexeme: (
+----------------------------------------------
+Token: integer         Lexeme: 5
+<Condition> -> <Expression> <Relop> <Expression>
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Integer>
+<Integer> -> 5
+----------------------------------------------
+Token: operator        Lexeme: +
+<Term Prime> -> ε
+<Expression Prime> -> + <Term> <Expression Prime>
+----------------------------------------------
+Token: integer         Lexeme: 5
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Integer>
+<Integer> -> 5
+----------------------------------------------
+Token: operator        Lexeme: <
+<Term Prime> -> ε
+<Expression Prime> -> ε
+<Relop> -> <
+----------------------------------------------
+Token: integer         Lexeme: 2
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Integer>
+<Integer> -> 2
+----------------------------------------------
+Token: separator       Lexeme: )
+<Term Prime> -> ε
+<Expression Prime> -> ε
+----------------------------------------------
+Token: separator       Lexeme: {
+<Statement> -> <Compound>
+<Compound> -> { <Statement List> }
+----------------------------------------------
+Token: identifier      Lexeme: valid
+<Statement List> -> <Statement>
+<Statement> -> <Assign>
+<Assign> -> <Identifier> = <Expression>;
+<Identifier> -> valid
+----------------------------------------------
+Token: operator        Lexeme: =
+----------------------------------------------
+Token: identifier      Lexeme: False
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Identifier>
+<Identifier> -> False
+----------------------------------------------
+Token: separator       Lexeme: ;
+<Term Prime> -> ε
+<Expression Prime> -> ε
+----------------------------------------------
+Token: separator       Lexeme: }
+----------------------------------------------
+Token: keyword         Lexeme: else
+----------------------------------------------
+Token: separator       Lexeme: {
+<Statement> -> <Compound>
+<Compound> -> { <Statement List> }
+----------------------------------------------
+Token: keyword         Lexeme: return
+<Statement List> -> <Statement>
+<Statement> -> <Return>
+<Return> -> ret <Expression>;
+----------------------------------------------
+Token: identifier      Lexeme: valid
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Identifier>
+<Identifier> -> valid
+----------------------------------------------
+Token: separator       Lexeme: ;
+<Term Prime> -> ε
+<Expression Prime> -> ε
+----------------------------------------------
+Token: separator       Lexeme: }
+----------------------------------------------
+Token: keyword         Lexeme: endif
+----------------------------------------------
+Token: separator       Lexeme: $

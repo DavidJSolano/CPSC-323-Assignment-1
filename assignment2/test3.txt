@@ -1,17 +1,10 @@
-[* This example checks if 10 is less than 2 ]
-$
-
-$
-boolean valid;
-$
-
-if(5+5 < 2)
-{
+$ [* This example checks if 10 is less than 2 *]
+$ boolean valid; $
+if(5+5 < 2) {
 valid = False;
 }
 else{
 return valid;
 }
 endif
-
 $

@@ -3,18 +3,17 @@
 
 $
 
-function areaRectangle (integer length, integer width)
+function areaRectangle (length integer, width integer)
 {
-   return length *width;
+   return length * width;
 
 }
 
     $
     [* declarations *]
-    integer l , w;
+    integer l, w;
     boolean valid;
     $
-    
     scan(l,w);
     if (l * w < 0)
     {
