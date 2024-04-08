@@ -24,6 +24,8 @@ class FSM:
     def __init__(self, filename: str):
         # store the filename
         self.filename: str = filename
+        # the current line number
+        self.line = 1
         # set of symbols our fsm can recognize
         self.symbols: set = {'whitespace', 'chr', 'int', 'dot',
                              'special', 'separator', 'operator', 'comment', 'closecomment'}
@@ -184,6 +186,8 @@ class FSM:
 
         for i, char in enumerate(file_contents):
             # search for current symbol
+            if i > 0 and file_contents[i - 1] == '\n':
+                self.line += 1
             curr_symbol = check_symbol(i)
             # If we are analyzing comments, pass until we reach end of comment
             if curr_state == 'ignore':
@@ -206,14 +210,14 @@ class FSM:
             if curr_symbol == 'operator':
                 if next_symbol != 'operator' or curr_token + file_contents[i+1] not in operators:
                     if curr_token == '!': curr_state = 'invalid'
-                    self.tokens.append({'token':curr_symbol,'lexeme': curr_token})
+                    self.tokens.append({'token':curr_symbol,'lexeme': curr_token, 'line': self.line})
                     curr_token = ''
                     curr_state = 'valid'
                 continue
             if curr_symbol == 'dot':
                 if next_symbol != 'int':
                     curr_state = 'invalid'
-                    self.tokens.append({'token':'invalid','lexeme': curr_token})
+                    self.tokens.append({'token':'invalid','lexeme': curr_token, 'line': self.line})
                     curr_token = ''
                     curr_state = 'valid'
                 continue
@@ -233,12 +237,12 @@ class FSM:
                     old_state = 'separator'
                 elif curr_token in keywords:
                     old_state = 'keyword'
-                self.tokens.append({'token':old_state,'lexeme': curr_token})
+                self.tokens.append({'token':old_state,'lexeme': curr_token, 'line': self.line})
                 curr_token = ''
 
         
         if curr_token != '':
-            self.tokens.append({'token': curr_token, 'lexeme': curr_state})
+            self.tokens.append({'token': curr_token, 'lexeme': curr_state, 'line': self.line})
     
     def token(self) -> Dict[str, str]:
         try:

@@ -11,7 +11,7 @@ if (ans == -3)
     return 0;
 endif
 
-while (low <= high ) {
+while (low <= high) {
     print (low);
     print (convertx (low));
     low = low + step;
