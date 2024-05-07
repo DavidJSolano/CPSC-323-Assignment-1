@@ -1,0 +1,22 @@
+
+[* example of area of rectangle *]
+
+$
+
+    $
+    [* declarations *]
+    integer l, w;
+    boolean valid;
+    $
+    scan(l,w);
+    if (l * w < 0)
+    {
+        valid = false;
+        print(valid);
+    }
+
+    else{
+        print(l);
+    }
+    endif
+$

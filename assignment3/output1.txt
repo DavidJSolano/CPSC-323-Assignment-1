@@ -1,0 +1,249 @@
+---------------------------------------------------------------------
+Token: separator       Lexeme: $               Line: 4
+<Rat24S> -> $ <Opt Function Definitions> $ <Opt Declaration List> $ <Statement List> $
+---------------------------------------------------------------------
+Token: keyword         Lexeme: function        Line: 6
+<Opt Function Definitions> -> <Function Definitions>
+<Function Definitions -> <Function>
+<Function> -> function <Identifier> (<Opt Parameter List>) <Opt Declaration List> <Body>
+---------------------------------------------------------------------
+Token: identifier      Lexeme: areaRectangle   Line: 6
+<Identifier> -> areaRectangle
+---------------------------------------------------------------------
+Token: separator       Lexeme: (               Line: 6
+---------------------------------------------------------------------
+Token: identifier      Lexeme: length          Line: 6
+<Opt Parameter List> -> <Parameter List>
+<Parameter List> -> <Parameter>, <Parameter List>
+<Parameter> -> <IDs> <Qualifier>
+<IDs> -> <Identifier>
+<Identifier> -> length
+---------------------------------------------------------------------
+Token: keyword         Lexeme: integer         Line: 6
+<Qualifier> -> integer
+---------------------------------------------------------------------
+Token: separator       Lexeme: ,               Line: 6
+---------------------------------------------------------------------
+Token: identifier      Lexeme: width           Line: 6
+<Parameter List> -> <Parameter>
+<Parameter> -> <IDs> <Qualifier>
+<IDs> -> <Identifier>
+<Identifier> -> width
+---------------------------------------------------------------------
+Token: keyword         Lexeme: integer         Line: 6
+<Qualifier> -> integer
+---------------------------------------------------------------------
+Token: separator       Lexeme: )               Line: 6
+---------------------------------------------------------------------
+Token: separator       Lexeme: {               Line: 7
+<Body> -> { <Statement List> }
+---------------------------------------------------------------------
+Token: keyword         Lexeme: return          Line: 8
+<Statement List> -> <Statement>
+<Statement> -> <Return>
+<Return> -> ret <Expression>;
+---------------------------------------------------------------------
+Token: identifier      Lexeme: length          Line: 8
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Identifier>
+<Identifier> -> length
+---------------------------------------------------------------------
+Token: operator        Lexeme: *               Line: 8
+<Term Prime> -> * <Factor> <Term Prime>
+---------------------------------------------------------------------
+Token: identifier      Lexeme: width           Line: 8
+<Factor> -> <Primary>
+<Primary> -> <Identifier>
+<Identifier> -> width
+---------------------------------------------------------------------
+Token: separator       Lexeme: ;               Line: 8
+<Term Prime> -> ε
+<Expression Prime> -> ε
+---------------------------------------------------------------------
+Token: separator       Lexeme: }               Line: 10
+---------------------------------------------------------------------
+Token: separator       Lexeme: $               Line: 12
+---------------------------------------------------------------------
+Token: keyword         Lexeme: integer         Line: 14
+<Opt Declaration List> -> <Declaration List>
+<Declaration List> -> <Declaration>; <Declaration List>
+<Declaration> -> <Qualifier> <IDs>
+<Qualifier> -> integer
+---------------------------------------------------------------------
+Token: integer         Lexeme: l               Line: 14
+<IDs> -> <Identifier>, <IDs>
+<Identifier> -> l
+---------------------------------------------------------------------
+Token: separator       Lexeme: ,               Line: 14
+---------------------------------------------------------------------
+Token: integer         Lexeme: w               Line: 14
+<IDs> -> <Identifier>
+<Identifier> -> w
+---------------------------------------------------------------------
+Token: separator       Lexeme: ;               Line: 14
+---------------------------------------------------------------------
+Token: keyword         Lexeme: boolean         Line: 15
+<Declaration List> -> <Declaration>;
+<Declaration> -> <Qualifier> <IDs>
+<Qualifier> -> boolean
+---------------------------------------------------------------------
+Token: identifier      Lexeme: valid           Line: 15
+<IDs> -> <Identifier>
+<Identifier> -> valid
+---------------------------------------------------------------------
+Token: separator       Lexeme: ;               Line: 15
+---------------------------------------------------------------------
+Token: separator       Lexeme: $               Line: 16
+---------------------------------------------------------------------
+Token: keyword         Lexeme: scan            Line: 17
+<Statement List> -> <Statement> <Statement List>
+<Statement> -> <Scan>
+<Scan> -> scan ( <IDs> );
+---------------------------------------------------------------------
+Token: separator       Lexeme: (               Line: 17
+---------------------------------------------------------------------
+Token: integer         Lexeme: l               Line: 17
+<IDs> -> <Identifier>, <IDs>
+<Identifier> -> l
+---------------------------------------------------------------------
+Token: separator       Lexeme: ,               Line: 17
+---------------------------------------------------------------------
+Token: integer         Lexeme: w               Line: 17
+<IDs> -> <Identifier>
+<Identifier> -> w
+---------------------------------------------------------------------
+Token: separator       Lexeme: )               Line: 17
+---------------------------------------------------------------------
+Token: separator       Lexeme: ;               Line: 17
+---------------------------------------------------------------------
+Token: keyword         Lexeme: if              Line: 18
+<Statement List> -> <Statement>
+<Statement> -> <If>
+<If> -> if ( <Condition> ) <Statement> else <Statement> endif
+---------------------------------------------------------------------
+Token: separator       Lexeme: (               Line: 18
+---------------------------------------------------------------------
+Token: identifier      Lexeme: l               Line: 18
+<Condition> -> <Expression> <Relop> <Expression>
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Identifier>
+<Identifier> -> l
+---------------------------------------------------------------------
+Token: operator        Lexeme: *               Line: 18
+<Term Prime> -> * <Factor> <Term Prime>
+---------------------------------------------------------------------
+Token: identifier      Lexeme: w               Line: 18
+<Factor> -> <Primary>
+<Primary> -> <Identifier>
+<Identifier> -> w
+---------------------------------------------------------------------
+Token: operator        Lexeme: <               Line: 18
+<Term Prime> -> ε
+<Expression Prime> -> ε
+<Relop> -> <
+---------------------------------------------------------------------
+Token: integer         Lexeme: 0               Line: 18
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Integer>
+<Integer> -> 0
+---------------------------------------------------------------------
+Token: separator       Lexeme: )               Line: 18
+<Term Prime> -> ε
+<Expression Prime> -> ε
+---------------------------------------------------------------------
+Token: separator       Lexeme: {               Line: 19
+<Statement> -> <Compound>
+<Compound> -> { <Statement List> }
+---------------------------------------------------------------------
+Token: identifier      Lexeme: valid           Line: 20
+<Statement List> -> <Statement> <Statement List>
+<Statement> -> <Assign>
+<Assign> -> <Identifier> = <Expression>;
+<Identifier> -> valid
+---------------------------------------------------------------------
+Token: operator        Lexeme: =               Line: 20
+---------------------------------------------------------------------
+Token: identifier      Lexeme: False           Line: 20
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Identifier>
+<Identifier> -> False
+---------------------------------------------------------------------
+Token: separator       Lexeme: ;               Line: 20
+<Term Prime> -> ε
+<Expression Prime> -> ε
+---------------------------------------------------------------------
+Token: keyword         Lexeme: print           Line: 21
+<Statement List> -> <Statement>
+<Statement> -> <Print>
+<Print> -> print ( <Expression> );
+---------------------------------------------------------------------
+Token: separator       Lexeme: (               Line: 21
+---------------------------------------------------------------------
+Token: identifier      Lexeme: valid           Line: 21
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Identifier>
+<Identifier> -> valid
+---------------------------------------------------------------------
+Token: separator       Lexeme: )               Line: 21
+<Term Prime> -> ε
+<Expression Prime> -> ε
+---------------------------------------------------------------------
+Token: separator       Lexeme: ;               Line: 21
+---------------------------------------------------------------------
+Token: separator       Lexeme: }               Line: 22
+---------------------------------------------------------------------
+Token: keyword         Lexeme: else            Line: 24
+---------------------------------------------------------------------
+Token: separator       Lexeme: {               Line: 24
+<Statement> -> <Compound>
+<Compound> -> { <Statement List> }
+---------------------------------------------------------------------
+Token: keyword         Lexeme: print           Line: 25
+<Statement List> -> <Statement>
+<Statement> -> <Print>
+<Print> -> print ( <Expression> );
+---------------------------------------------------------------------
+Token: separator       Lexeme: (               Line: 25
+---------------------------------------------------------------------
+Token: identifier      Lexeme: areaRectangle   Line: 25
+<Expression> -> <Term> <Expression Prime>
+<Term> -> <Factor> <Term Prime>
+<Factor> -> <Primary>
+<Primary> -> <Identifier> ( <IDs> )
+<Identifier> -> areaRectangle
+---------------------------------------------------------------------
+Token: separator       Lexeme: (               Line: 25
+---------------------------------------------------------------------
+Token: integer         Lexeme: l               Line: 25
+<IDs> -> <Identifier>, <IDs>
+<Identifier> -> l
+---------------------------------------------------------------------
+Token: separator       Lexeme: ,               Line: 25
+---------------------------------------------------------------------
+Token: integer         Lexeme: w               Line: 25
+<IDs> -> <Identifier>
+<Identifier> -> w
+---------------------------------------------------------------------
+Token: separator       Lexeme: )               Line: 25
+---------------------------------------------------------------------
+Token: separator       Lexeme: )               Line: 25
+<Term Prime> -> ε
+<Expression Prime> -> ε
+---------------------------------------------------------------------
+Token: separator       Lexeme: ;               Line: 25
+---------------------------------------------------------------------
+Token: separator       Lexeme: }               Line: 26
+---------------------------------------------------------------------
+Token: keyword         Lexeme: endif           Line: 27
+---------------------------------------------------------------------
+Token: separator       Lexeme: $               Line: 28
