@@ -1,13 +1,22 @@
+
+[* check if  5 is even or odd *]
+
 $
-integer i, max, sum; [* declarations *]
+integer num, boolean isPrime; [* declarations *]
 $
-sum = 0;
-i = 1;
-scan (max);
-while (i < max) {
-sum = sum + i;
-i = i + 1;
+
+num = 5;
+isPrime = false;
+
+if (num % 2 == 0)
+{
+    print(isPrime);
 }
-endwhile
-print (sum + max);
+else
+{
+    isPrime= true;
+    print(isPrime);
+}
+endif
+
 $

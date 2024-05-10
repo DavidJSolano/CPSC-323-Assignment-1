@@ -1,22 +1,20 @@
 
-[* example of area of rectangle *]
+[* basic interest calculation *]
 
 $
 
     $
     [* declarations *]
-    integer l, w;
-    boolean valid;
+    integer principal, time;
+    real rate, interest;
     $
-    scan(l,w);
-    if (l * w < 0)
-    {
-        valid = false;
-        print(valid);
-    }
 
-    else{
-        print(l);
-    }
-    endif
+    principal = 1000;
+    rate = 0.05;
+    time = 2;
+    interest = principal * rate* time;
+    
+    print(interest);
+
+    return 0;
 $

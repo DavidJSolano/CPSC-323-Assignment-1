@@ -1,20 +1,23 @@
-[* this is comment for this sample code which converts Fahrenheit into Celcius *]
-$
-function convertx (fahr integer) {
-return 5 * (fahr - 32) / 9;
-}
-$
-integer low, high, step; [* declarations *]
-$
-scan (low, high, step);
-if (ans == -3)
-    return 0;
-endif
 
-while (low <= high) {
-    print (low);
-    print (convertx (low));
-    low = low + step;
+[* sample code for swapping variables *]
+$
+function swap (a integer, b integer) {
+
+        integer swap = a;
+        a = b;
+        b= swap ;
+
+
 }
-endwhile
+$
+integer num1, num2; [* declarations *]
+$
+    [*before swap*]
+    scan (num1,num2);
+    print(num1,num2);
+
+    [*after swap]
+    swap(num1,num2);
+    print(num1,num2);
+    return 0;
 $
