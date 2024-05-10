@@ -63,7 +63,7 @@ while True:
                 item_list += item + '\n'
                 i += 1
             item_list += "------------- Symbol Table -------------\n"
-            item_list += "Identifier: \t MemoryLocation:"
+            item_list += "Identifier: \t MemoryLocation:\n"
             print("------------- Symbol Table -------------")
             print("Identifier: \t MemoryLocation:")
             for item, value in testcase.symbol_table.items():
