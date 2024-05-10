@@ -62,6 +62,13 @@ while True:
                 print(f"{i}. {item}")
                 item_list += item + '\n'
                 i += 1
+            item_list += "------------- Symbol Table -------------\n"
+            item_list += "Identifier: \t MemoryLocation:"
+            print("------------- Symbol Table -------------")
+            print("Identifier: \t MemoryLocation:")
+            for item, value in testcase.symbol_table.items():
+                item_list += f"{item:<17}{value:<17}\n"
+                print(f"{item:<17}{value:<17}")
             f = open("output3.txt", 'w')
             f.write(item_list)
             f.close()

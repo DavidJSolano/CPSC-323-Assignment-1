@@ -11,13 +11,13 @@ JUMP 22
 LABEL
 PUSHM 5002
 PUSHM 5002
-PUSHI i
-ADD
+PUSHM 5000
+A
 POPM 5002
 PUSHM 5000
 PUSHM 5000
 PUSHI 1
-ADD
+A
 POPM 5000
 LABEL
 PUSHM 5000
@@ -26,5 +26,9 @@ LES
 JUMP0 11
 PUSHM 5002
 PUSHM 5001
-ADD
+A
 SOUT
+------------- Symbol Table -------------
+Identifier: 	 MemoryLocation:i                5000             
+max              5001             
+sum              5002             

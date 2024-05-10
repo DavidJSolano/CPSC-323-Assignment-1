@@ -10,8 +10,10 @@ class Syntax():
         self.token_list = []
         self.token_list.extend(fsm.tokens)
         for token in self.token_list:
-            if token['token'] == 'valid' or token['token'] == 'int':
+            if token['token'] == 'int' or (token['token'] == 'valid' and not token['lexeme'][0].isalpha()):
                 token['token'] = 'integer'
+            elif token['token'] == 'valid':
+                token['token'] = 'identifier'
         self.token_list.insert(0, {'token': 'blank', 'lexeme': 'blank'})
         self.curr_index = 0
         self.curr_token = self.token_list[self.curr_index]
@@ -70,7 +72,6 @@ class Syntax():
         self.set_next()  # '$'
         if self.curr_token['lexeme'] != '$':
             raise TypeError(f"This token at line {self.token_list[self.curr_index]['line']} must be a '$'. The token is: " + self.print_exception())
-
 
         if self.get_next()['lexeme'] in qualifiers:
             self.opt_declaration_list(self.set_next())
@@ -481,7 +482,6 @@ class Syntax():
         self.assembly.extend(comparisons)
         self.assembly.append(f'JUMP0 {start_while_line}')
 
-
     def condition(self, next):
         if self.switch:
             print("<Condition> -> <Expression> <Relop> <Expression>")
@@ -522,13 +522,13 @@ class Syntax():
             if self.switch:
                 print("<Expression Prime> -> + <Term> <Expression Prime>")
             self.term(self.set_next())
-            self.assembly.append('ADD') #--------------------------------------------------------------
+            self.assembly.append('A') #--------------------------------------------------------------
             self.expression2(self.set_next())
         elif next['lexeme'] == '-':
             if self.switch:
                 print("<Expression Prime> -> - <Term> <Expression Prime>")
             self.term(self.set_next())
-            self.assembly.append('SUB') #--------------------------------------------------------------
+            self.assembly.append('S') #--------------------------------------------------------------
             self.expression2(self.set_next())
         else:
             if self.switch:
@@ -547,13 +547,13 @@ class Syntax():
             if self.switch:
                 print("<Term Prime> -> * <Factor> <Term Prime>")
             self.factor(self.set_next())
-            self.assembly.append('MUL') #--------------------------------------------------------------
+            self.assembly.append('M') #--------------------------------------------------------------
             self.term2(self.set_next())
         elif next['lexeme'] == '/':
             if self.switch:
                 print("<Term Prime> -> / <Factor> <Term Prime>")
             self.factor(self.set_next())
-            self.assembly.append('DIV') #--------------------------------------------------------------
+            self.assembly.append('D') #--------------------------------------------------------------
             self.term2(self.set_next())
         else:
             if self.switch:
