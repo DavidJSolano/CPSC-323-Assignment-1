@@ -68,7 +68,9 @@ class Syntax():
         return self.token_list[start + amt + 1]
 
     def Rat24S(self, next):
-
+        self.set_next()  # '$'
+        if self.curr_token['lexeme'] != '$':
+            raise TypeError(f"This token at line {self.token_list[self.curr_index]['line']} must be a '$'. The token is: " + self.print_exception())
         self.set_next()  # '$'
         if self.curr_token['lexeme'] != '$':
             raise TypeError(f"This token at line {self.token_list[self.curr_index]['line']} must be a '$'. The token is: " + self.print_exception())
@@ -205,9 +207,8 @@ class Syntax():
     def declaration_list(self, next):
         # ----------------------------------------------------------------------------------------------
         for i in range(self.curr_index, len(self.token_list)):
-            print(self.symbol_table)
             if self.token_list[i]['lexeme'] == ';': break
-            elif self.token_list[i]['token'] == 'identifier' or self.token_list[i]['token'] == 'integer': self.add_symbol(self.token_list[i]['lexeme'])
+            elif self.token_list[i]['token'] == 'identifier': self.add_symbol(self.token_list[i]['lexeme'])
         # ----------------------------------------------------------------------------------------------
         if self.get_next(val=';', amt=1)['lexeme'] not in qualifiers:
             if self.switch:
@@ -326,7 +327,7 @@ class Syntax():
             print("<Assign> -> <Identifier> = <Expression>;")
         #-----------------------------------------------------------------------------------------------
         print(next)
-        self.identifier(next)
+        # self.identifier(next)
         self.set_next()  # '='
         if self.curr_token['lexeme'] != '=':
             raise TypeError(f"This token at line {self.token_list[self.curr_index]['line']} must be a '='. The token is: " + self.print_exception())
@@ -436,7 +437,9 @@ class Syntax():
         self.set_next()  # '('
         if self.curr_token['lexeme'] != '(':
             raise TypeError(f"This token at line {self.token_list[self.curr_index]['line']} must be a '('. The token is: " + self.print_exception())
+        self.declaring = True
         self.IDs(self.set_next())
+        self.declaring = False
         self.set_next()  # ')'
         if self.curr_token['lexeme'] != ')':
             raise TypeError(f"This token at line {self.token_list[self.curr_index]['line']} must be a ')'. The token is: " + self.print_exception())
