@@ -1,23 +1,14 @@
 
-[* sample code for swapping variables *]
 $
-function swap (a integer, b integer) {
-
-        integer swap = a;
-        a = b;
-        b= swap ;
-
-
-}
+[* calculates and pritns result *]
+    $
+    integer first, second, third, fourth, result; [* declarations *]
+    $
+    first = 1;
+    fourth = 1;
+    second = 4;
+    third = 4;
+    result = first + second * third + fourth;
+    print(result);
 $
-integer num1, num2; [* declarations *]
-$
-    [*before swap*]
-    scan (num1,num2);
-    print(num1,num2);
 
-    [*after swap]
-    swap(num1,num2);
-    print(num1,num2);
-    return 0;
-$

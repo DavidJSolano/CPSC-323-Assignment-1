@@ -23,6 +23,7 @@ PUSHM 5002
 PUSHM 5001
 A
 SOUT
+
 ------------- Symbol Table -------------
 Identifier: 	 MemoryLocation:
 i                5000             
