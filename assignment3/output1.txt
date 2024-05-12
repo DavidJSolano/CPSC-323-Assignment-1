@@ -12,6 +12,6 @@ PUSHM 5001
 SOUT
 LABEL
 ------------- Symbol Table -------------
-Identifier:		MemoryLocation:		Type:
+Identifier:				MemoryLocation:			Type:
 num                     5000                    integer
 istwo                   5001                    boolean

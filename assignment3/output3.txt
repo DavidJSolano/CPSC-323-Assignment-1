@@ -45,7 +45,7 @@ PUSHM 5001
 M
 SOUT
 ------------- Symbol Table -------------
-Identifier:		MemoryLocation:		Type:
+Identifier:				MemoryLocation:			Type:
 height                  5000                    integer
 weight                  5001                    integer
 age                     5002                    integer

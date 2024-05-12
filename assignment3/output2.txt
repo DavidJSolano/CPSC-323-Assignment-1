@@ -24,7 +24,7 @@ PUSHM 5001
 A
 SOUT
 ------------- Symbol Table -------------
-Identifier:		MemoryLocation:		Type:
+Identifier:				MemoryLocation:			Type:
 i                       5000                    integer
 max                     5001                    integer
 sum                     5002                    integer
