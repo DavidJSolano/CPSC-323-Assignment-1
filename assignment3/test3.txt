@@ -2,15 +2,27 @@
 $
 [* NO function definitions *]
 $
-integer i, max, sum; [* declarations *]
+integer height, weight, age; [* declarations *]
+boolean isValid;
 $
-sum = 0;
-i = 1;
-scan (max);
-while (i < max) {
-sum = sum + i;
-i = i + 1;
+height = 50;
+weight = 40;
+height = height * 2;
+scan (age);
+if (age < 18) {
+    if (height * weight > 2000) {
+        isValid = false;
+        print(isValid);
+    } else {
+        isValid = true;
+        print(isValid);
+    } endif
+    print(height * weight);
 }
-endwhile
-print (sum + max);
+else {
+    isValid = true;
+    print(isValid);
+}
+endif
+print(height * weight);
 $

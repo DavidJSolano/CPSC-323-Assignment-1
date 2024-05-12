@@ -1,31 +1,52 @@
-PUSHI 0
-POPM 5002
-PUSHI 1
+PUSHI 50
+POPM 5000
+PUSHI 40
+POPM 5001
+PUSHM 5000
+PUSHI 2
+M
 POPM 5000
 SIN
-POPM 5001
-JUMP 17
-LABEL
-PUSHM 5002
-PUSHM 5000
-A
 POPM 5002
+PUSHM 5002
+PUSHI 18
+LES
+JUMP0 37
 PUSHM 5000
+PUSHM 5001
+M
+PUSHI 2000
+GRT
+JUMP0 25
+PUSHI 0
+POPM 5003
+PUSHM 5003
+SOUT
+JUMP 30
+LABEL
 PUSHI 1
-A
-POPM 5000
+POPM 5003
+PUSHM 5003
+SOUT
 LABEL
 PUSHM 5000
 PUSHM 5001
-LES
-JUMP0 8
-PUSHM 5002
-PUSHM 5001
-A
+M
 SOUT
-
+JUMP 42
+LABEL
+PUSHI 1
+POPM 5003
+PUSHM 5003
+SOUT
+LABEL
+PUSHM 5000
+PUSHM 5001
+M
+SOUT
 ------------- Symbol Table -------------
-Identifier: 	 MemoryLocation:
-i                5000             
-max              5001             
-sum              5002             
+Identifier:		MemoryLocation:		Type:
+height                  5000                    integer
+weight                  5001                    integer
+age                     5002                    integer
+isValid                 5003                    boolean
