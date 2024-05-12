@@ -1,25 +1,17 @@
+PUSHI 5
+POPM 5000
 PUSHI 0
-POPM 5002
-PUSHI 1
-POPM 5000
-SIN
 POPM 5001
-JUMP 17
-LABEL
-PUSHM 5002
 PUSHM 5000
-A
-POPM 5002
-PUSHM 5000
+PUSHI 2
+D
 PUSHI 1
-A
-POPM 5000
-LABEL
-PUSHM 5000
+EQU
+JUMP0 13
 PUSHM 5001
-LES
-JUMP0 8
-PUSHM 5002
-PUSHM 5001
-A
 SOUT
+LABEL
+------------- Symbol Table -------------
+Identifier:		MemoryLocation:		Type:
+num                     5000                    integer
+istwo                   5001                    boolean

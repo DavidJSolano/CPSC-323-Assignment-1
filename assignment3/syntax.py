@@ -19,6 +19,8 @@ class Syntax():
         self.curr_token = self.token_list[self.curr_index]
         self.switch = True
         # -----------------------------------------------
+        self.types = {}
+        self.current_type = 'None'
         self.symbol_table: dict = {}
         self.assembly: list = []
         self.while_stack: list = []
@@ -133,6 +135,8 @@ class Syntax():
         if self.switch:
             print(f"<Identifier> -> {next['lexeme']}")
             #-----------------------------------------------------------------------------------------------
+            if next['lexeme'] not in self.types:
+                self.types[next['lexeme']] = self.current_type
             if not self.declaring:
                 print(next)
                 if next['lexeme'] not in self.symbol_table:
@@ -192,6 +196,7 @@ class Syntax():
     def qualifier(self, next):
         if self.switch:
             print(f"<Qualifier> -> {next['lexeme']}")
+            self.current_type = next['lexeme']
 
     def opt_declaration_list(self, next):
         if next['lexeme'] in qualifiers:
@@ -333,7 +338,8 @@ class Syntax():
             raise TypeError(f"This token at line {self.token_list[self.curr_index]['line']} must be a '='. The token is: " + self.print_exception())
         self.expression(self.set_next())
         if next['lexeme'] not in self.symbol_table: raise VariableError(f"{next['lexeme']} was not declared")
-        else: self.assembly.append(f"POPM {self.symbol_table[next['lexeme']]}")
+        else:
+            self.assembly.append(f"POPM {self.symbol_table[next['lexeme']]}")
         #-----------------------------------------------------------------------------------------------
         self.set_next()  # ';'
         if self.curr_token['lexeme'] != ';':

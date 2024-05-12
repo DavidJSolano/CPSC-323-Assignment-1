@@ -1,26 +1,30 @@
+PUSHI 0
+POPM 5002
 PUSHI 1
 POPM 5000
-PUSHI 1
-POPM 5003
-PUSHI 4
+SIN
 POPM 5001
-PUSHI 4
+JUMP 17
+LABEL
+PUSHM 5002
+PUSHM 5000
+A
 POPM 5002
 PUSHM 5000
+PUSHI 1
+A
+POPM 5000
+LABEL
+PUSHM 5000
 PUSHM 5001
+LES
+JUMP0 8
 PUSHM 5002
-M
+PUSHM 5001
 A
-PUSHM 5003
-A
-POPM 5004
-PUSHM 5004
 SOUT
-
 ------------- Symbol Table -------------
-Identifier: 	 MemoryLocation:
-first            5000             
-second           5001             
-third            5002             
-fourth           5003             
-result           5004             
+Identifier:		MemoryLocation:		Type:
+i                       5000                    integer
+max                     5001                    integer
+sum                     5002                    integer

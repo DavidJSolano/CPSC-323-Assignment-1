@@ -22,7 +22,7 @@ while True:
     match number:
         case '1':
             store_stdout()
-            testcase = Syntax(FSM("test3.txt"))
+            testcase = Syntax(FSM("test1.txt"))
             testcase.Rat24S(testcase.token_list[0])
             sa_output: str = output_stream.getvalue()
             restore_stdout()
@@ -32,6 +32,13 @@ while True:
                 print(f"{i}. {item}")
                 item_list += item + '\n'
                 i += 1
+            item_list += "------------- Symbol Table -------------\n"
+            item_list += f"Identifier:\t\tMemoryLocation:\t\tType:\n"
+            print("------------- Symbol Table -------------")
+            print(f"Identifier:\t\tMemoryLocation:\t\tType:")
+            for item, value in testcase.symbol_table.items():
+                item_list += f"{item:<24}{value:<24}{testcase.types[item]}\n"
+                print(f"{item:<24}{value:<24}{testcase.types[item]}")
             f = open("output1.txt", 'w')
             f.write(item_list)
             f.close()
@@ -47,6 +54,13 @@ while True:
                 print(f"{i}. {item}")
                 item_list += item + '\n'
                 i += 1
+            item_list += "------------- Symbol Table -------------\n"
+            item_list += f"Identifier:\t\tMemoryLocation:\t\tType:\n"
+            print("------------- Symbol Table -------------")
+            print(f"Identifier:\t\tMemoryLocation:\t\tType:")
+            for item, value in testcase.symbol_table.items():
+                item_list += f"{item:<24}{value:<24}{testcase.types[item]}\n"
+                print(f"{item:<24}{value:<24}{testcase.types[item]}")
             f = open("output2.txt", 'w')
             f.write(item_list)
             f.close()
@@ -63,12 +77,12 @@ while True:
                 item_list += item + '\n'
                 i += 1
             item_list += "------------- Symbol Table -------------\n"
-            item_list += "Identifier: \t MemoryLocation:\n"
+            item_list += f"Identifier:\t\tMemoryLocation:\t\tType:\n"
             print("------------- Symbol Table -------------")
-            print("Identifier: \t MemoryLocation:")
+            print(f"Identifier:\t\tMemoryLocation:\t\tType:")
             for item, value in testcase.symbol_table.items():
-                item_list += f"{item:<17}{value:<17}\n"
-                print(f"{item:<17}{value:<17}")
+                item_list += f"{item:<24}{value:<24}{testcase.types[item]}\n"
+                print(f"{item:<24}{value:<24}{testcase.types[item]}")
             f = open("output3.txt", 'w')
             f.write(item_list)
             f.close()

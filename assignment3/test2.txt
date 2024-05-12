@@ -1,14 +1,16 @@
-
+[* this is comment for this sample code for assignment 3 *]
 $
-[* calculates and pritns result *]
-    $
-    integer first, second, third, fourth, result; [* declarations *]
-    $
-    first = 1;
-    fourth = 1;
-    second = 4;
-    third = 4;
-    result = first + second * third + fourth;
-    print(result);
+[* NO function definitions *]
 $
-
+integer i, max, sum; [* declarations *]
+$
+sum = 0;
+i = 1;
+scan (max);
+while (i < max) {
+sum = sum + i;
+i = i + 1;
+}
+endwhile
+print (sum + max);
+$

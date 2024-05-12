@@ -1,20 +1,10 @@
-
-[* basic interest calculation *]
-
 $
-
-    $
-    [* declarations *]
-    integer principal, time;
-    real rate, interest;
-    $
-
-    principal = 1000;
-    rate = 0.05;
-    time = 2;
-    interest = principal * rate* time;
-    
-    print(interest);
-
-    return 0;
+$
+integer num; 
+boolean istwo; [* declarations *]
+$
+num = 5;
+istwo = false;
+if (num / 2 == 1) { print(istwo); }
+endif
 $
